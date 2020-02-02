@@ -1,22 +1,18 @@
-open Note
+open Note;
 
-type dataState = {
-  notes: list(note)
-}
+type dataState = {notes: list(note)};
 
 type noteEditorState = {
   isOpen: bool,
   openNoteId: option(int),
-  currentNote: option(note)
-}
+  currentNote: option(note),
+};
 
-type uiState = {
-  noteEditor: noteEditorState
-}
+type uiState = {noteEditor: noteEditorState};
 
 type appState = {
   data: dataState,
-  ui: uiState
+  ui: uiState,
 };
 
 type appAction =
@@ -25,24 +21,40 @@ type appAction =
 
 let initialState: appState = {
   data: {
-    notes: []
+    notes: [],
   },
   ui: {
     noteEditor: {
       openNoteId: None,
       currentNote: None,
-      isOpen: false
-    }
-  }
-}
- 
+      isOpen: false,
+    },
+  },
+};
+
 let reducer = (state, action) =>
-  switch action {
-  | CreateNote(action) => {...state, data: {...state.data, notes: state.data.notes @ [action]}}
-  | ToggleNoteEditor(action) => {...state, ui: {...state.ui, noteEditor: {...state.ui.noteEditor, isOpen: action}}}
+  switch (action) {
+  | CreateNote(action) => {
+      ...state,
+      data: {
+        ...state.data,
+        notes: state.data.notes @ [action],
+      },
+    }
+  | ToggleNoteEditor(action) => {
+      ...state,
+      ui: {
+        ...state.ui,
+        noteEditor: {
+          ...state.ui.noteEditor,
+          isOpen: action,
+        },
+      },
+    }
   };
 
-let store = Reductive.Store.create(~reducer=reducer, ~preloadedState=initialState, ());
+let store =
+  Reductive.Store.create(~reducer, ~preloadedState=initialState, ());
 
 module AppStore = {
   include ReductiveContext.Make({

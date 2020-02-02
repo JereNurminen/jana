@@ -6,14 +6,11 @@ let make = () => {
   let isOpen = State.AppStore.useSelector(Selectors.isNoteEditorOpen);
 
   switch (isOpen) {
-    | false => ReasonReact.null
-    | true => (
-        <div>
-          <input type_="text" onChange=(onEdit)/>
-          <button>
-            (ReasonReact.string("save"))
-          </button>
-        </div>
-      )
+  | false => ReasonReact.null
+  | true =>
+    <div>
+      <input type_="text" onChange=onEdit />
+      <button> {ReasonReact.string("save")} </button>
+    </div>
   };
-}
+};

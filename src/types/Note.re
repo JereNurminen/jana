@@ -7,10 +7,10 @@ type fieldTypes =
 type field = {
   name: string,
   fieldType: fieldTypes,
-  value: string
-}
+  value: string,
+};
 
 type note = {
   title: string,
-  fields: option(list(field))
-}
+  fields: option(list(field)),
+};
